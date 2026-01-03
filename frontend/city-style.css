@@ -1,0 +1,272 @@
+/* CITY OVERVIEW & TOURIST PLACES STYLES */
+
+:root {
+    --primary-blue: #EFF6FF;
+    /* Light dull blue background */
+    --white: #FFFFFF;
+    --text-dark: #1F2937;
+    --text-gray: #6B7280;
+    --accent: #3B82F6;
+    --success: #10B981;
+    --danger: #EF4444;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    background-color: var(--primary-blue);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-dark);
+}
+
+/* Common Header */
+.page-header {
+    background: var(--white);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+.brand span {
+    color: var(--accent);
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background-color: #F3F4F6;
+    color: var(--text-dark);
+}
+
+/* Banner Section */
+.city-banner {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+}
+
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.banner-content {
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.banner-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.banner-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Overview Specific */
+.overview-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.action-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    margin-top: -3rem;
+    /* Overlap banner */
+    position: relative;
+    z-index: 20;
+}
+
+.btn-large {
+    display: inline-block;
+    background-color: var(--accent);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+.btn-large:hover {
+    background-color: #2563EB;
+}
+
+.map-container-large {
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    height: 400px;
+}
+
+#map-overview {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+}
+
+/* Tourist Places Page Styles */
+.places-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    /* List + Map Sidebar */
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .places-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .map-sidebar {
+        height: 300px;
+        order: -1;
+        /* Map on top on mobile */
+    }
+}
+
+.places-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.place-card {
+    background: var(--white);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.place-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.place-card.active-marker {
+    border-color: var(--accent);
+}
+
+.place-card.is-done {
+    filter: grayscale(100%);
+    opacity: 0.7;
+}
+
+.place-card.is-done:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.place-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.place-content {
+    padding: 1rem;
+    position: relative;
+}
+
+.place-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.place-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.status-icon {
+    color: var(--text-gray);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.status-icon.done {
+    color: var(--success);
+}
+
+.place-desc {
+    font-size: 0.875rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.place-meta {
+    display: flex;
+    align-items: center;
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.map-sidebar {
+    background: var(--white);
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    position: sticky;
+    top: 2rem;
+    height: calc(100vh - 4rem);
+    overflow: hidden;
+}
+
+#map-places {
+    width: 100%;
+    height: 100%;
+}

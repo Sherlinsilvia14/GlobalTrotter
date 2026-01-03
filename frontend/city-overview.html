@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Overview | THISAI</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="city-style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="brand">this<span>ai</span></div>
+        <nav>
+            <a href="dashboard.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </nav>
+    </header>
+
+    <!-- Loading State -->
+    <div id="loading" style="text-align:center; padding: 5rem; display:none;">
+        <i class="fas fa-spinner fa-spin fa-2x" style="color:var(--accent)"></i>
+        <p style="margin-top:1rem;">Loading City Data...</p>
+    </div>
+
+    <div id="content">
+        <!-- City Banner -->
+        <div class="city-banner" id="banner">
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <h1 class="banner-title" id="city-name">Loading...</h1>
+                <p class="banner-subtitle" id="city-desc">Please wait while we fetch the details.</p>
+                <div style="margin-top:1rem; font-size:1.1rem;">
+                    <i class="fas fa-map-marker-alt"></i> <span id="city-country">Country</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container overview-layout">
+
+            <!-- Navigation Action -->
+            <div class="action-card">
+                <h2>Ready to explore?</h2>
+                <p style="color:var(--text-gray); margin-bottom:1.5rem;">Discover the top rated tourist attractions.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="#" id="btn-tourist-places" class="btn-large">
+                        View Tourist Places <i class="fas fa-arrow-right" style="margin-left:0.5rem;"></i>
+                    </a>
+                    <button class="btn-large"
+                        style="background-color: var(--white); color: var(--accent); border: 2px solid var(--accent); cursor: pointer;"
+                        onclick="alert('Add Spot feature coming soon!')">
+                        <i class="fas fa-plus"></i> Add Spot
+                    </button>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="map-container-large">
+                <div id="map-overview" style="z-index: 1;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Scripts -->
+    <script src="places-data.js"></script>
+    <script src="city-overview.js"></script>
+</body>
+
+</html>

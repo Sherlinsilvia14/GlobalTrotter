@@ -5,13 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlobeTrotter - Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
 </head>
 
 <body>
-    <div class="container">
+    <div class="bg-animation"></div>
+
+    <div class="glass-container">
         <h2>Welcome Back</h2>
+        <p class="subtitle">Log in to continue your journey</p>
+
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="form-group">
                 <label for="email">Email Address</label>
@@ -21,9 +25,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" required placeholder="Enter your password">
             </div>
-            <p id="message" class="error" style="text-align: center;"></p>
+            <p id="message" class="error"></p>
             <button type="submit" class="btn">Login</button>
         </form>
+
         <p>Don't have an account? <a href="signup.html">Sign up</a></p>
     </div>
     <script src="script.js"></script>

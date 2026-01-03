@@ -71,6 +71,41 @@ const getDuration = (start, end) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    initCarousel();
+    loadDashboard();
+});
+
+// Carousel Logic
+function initCarousel() {
+    const images = [
+        "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg", // Eiffel Tower
+        "https://upload.wikimedia.org/wikipedia/commons/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg", // NYC
+        "https://upload.wikimedia.org/wikipedia/commons/f/f0/Sensoji_2019-04-03_%281%29.jpg", // Tokyo Senso-ji
+        "https://upload.wikimedia.org/wikipedia/commons/6/66/Louvre_Museum_Wikimedia_Commons.jpg", // Louvre
+        "https://upload.wikimedia.org/wikipedia/commons/a/a1/Statue_of_Liberty_7.jpg" // Statue of Liberty
+    ];
+
+    const container = document.getElementById('bg-carousel');
+
+    // Preload and create slides
+    images.forEach((url, index) => {
+        const slide = document.createElement('div');
+        slide.className = `bg-slide ${index === 0 ? 'active' : ''}`;
+        slide.style.backgroundImage = `url('${url}')`;
+        container.appendChild(slide);
+    });
+
+    // Rotate slides
+    let currentSlide = 0;
+    setInterval(() => {
+        const slides = document.querySelectorAll('.bg-slide');
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 5000); // Change every 5 seconds
+}
+
+function loadDashboard() {
     // 1. Check Auth (Simple Check)
     const token = localStorage.getItem('token');
     // if (!token) window.location.href = 'login.html'; // Copied from original logic
@@ -101,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     }
-});
+}
 
 function initDashboard() {
     renderTrips();
@@ -187,7 +222,16 @@ function renderTrips() {
 
 // Actions
 window.viewTrip = (id) => {
-    window.location.href = `city-view.html?id=${id}`;
+    const trip = trips.find(t => t.id === id);
+    let cityId = 'paris'; // Default
+    if (trip) {
+        const name = trip.name.toLowerCase();
+        if (name.includes('paris')) cityId = 'paris';
+        else if (name.includes('tokyo')) cityId = 'tokyo';
+        else if (name.includes('new york')) cityId = 'new-york';
+        // Add more mappings if needed
+    }
+    window.location.href = `city-overview.html?cityId=${cityId}`;
 };
 
 window.editTrip = (id) => {
