@@ -1,5 +1,5 @@
 /**
- * GlobeTrotter Dashboard Logic
+ * ThisAI Dashboard Logic
  */
 
 // Mock Data
@@ -9,7 +9,7 @@ let trips = [
         name: 'Summer in Paris',
         startDate: '2024-06-15',
         endDate: '2024-06-22',
-        description: 'A week-long exploration of art, culture, and cuisine in the heart of France. Visiting the Louvre, Eiffel Tower, and more.',
+        description: 'A week-long exploration of art, culture, and cuisine in the heart of France.',
         image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2073&auto=format&fit=crop',
         budget: 2500,
         cities: 1
@@ -19,7 +19,7 @@ let trips = [
         name: 'Tokyo Adventure',
         startDate: '2024-11-10',
         endDate: '2024-11-20',
-        description: 'Experiencing the neon lights of Shinjuku, historic temples of Asakusa, and the best sushi in the world.',
+        description: 'Experiencing the neon lights of Shinjuku and historic temples of Asakusa.',
         image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop',
         budget: 3500,
         cities: 3
@@ -62,7 +62,6 @@ const formatDate = (dateStr) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 };
 
-// Calculate duration in days
 const getDuration = (start, end) => {
     const s = new Date(start);
     const e = new Date(end);
@@ -72,17 +71,15 @@ const getDuration = (start, end) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Check Auth
+    // 1. Check Auth (Simple Check)
     const token = localStorage.getItem('token');
+    // if (!token) window.location.href = 'login.html'; // Copied from original logic
 
     // 2. Load Trips
     const storedTrips = JSON.parse(localStorage.getItem('globetrotter_trips') || '[]');
     if (storedTrips.length > 0) {
-        // Merge stored trips with mock trips, avoiding duplicates if logic was more complex
-        // For simple demo, let's just use stored trips if they exist, or seed them if not.
         trips = storedTrips;
     } else {
-        // Seed initial data to LS so 'Edit' works effectively across reloads
         localStorage.setItem('globetrotter_trips', JSON.stringify(trips));
     }
 
@@ -96,13 +93,20 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'login.html';
         }
     });
+
+    // Close Modal Listener
+    document.querySelector('.close-modal').addEventListener('click', closeModal);
+    window.onclick = function (event) {
+        if (event.target == document.getElementById('share-modal')) {
+            closeModal();
+        }
+    }
 });
 
 function initDashboard() {
-    renderTrips(); // Initial render
-    updateStats(); // Initial stats (Global)
+    renderTrips();
+    updateStats();
 
-    // Year Selector Listener for Grid Only
     const yearSelector = document.getElementById('year-selector');
     if (yearSelector) {
         yearSelector.addEventListener('change', () => {
@@ -112,23 +116,12 @@ function initDashboard() {
 }
 
 function updateStats() {
-    // Global Stats (All Years)
     const now = new Date();
-
-    // Categorize
     const completedTrips = trips.filter(t => new Date(t.endDate) < now).length;
     const upcomingTrips = trips.filter(t => new Date(t.endDate) >= now).length;
+    const totalDays = trips.reduce((acc, trip) => acc + getDuration(trip.startDate, trip.endDate), 0);
+    const totalBudget = trips.reduce((acc, trip) => acc + parseInt(trip.budget || 0), 0);
 
-    const totalDays = trips.reduce((acc, trip) => {
-        return acc + getDuration(trip.startDate, trip.endDate);
-    }, 0);
-
-    const totalBudget = trips.reduce((acc, trip) => {
-        const budget = trip.budget || 2000;
-        return acc + parseInt(budget);
-    }, 0);
-
-    // Update DOM
     const elUpcoming = document.getElementById('stat-upcoming');
     const elCompleted = document.getElementById('stat-completed');
     const elDays = document.getElementById('stat-days');
@@ -147,7 +140,6 @@ function renderTrips() {
 
     grid.innerHTML = '';
 
-    // Filter by Year if selector exists
     let filteredTrips = [...trips];
     if (yearSelector && yearSelector.value !== 'all') {
         const selectedYear = parseInt(yearSelector.value, 10);
@@ -157,7 +149,6 @@ function renderTrips() {
         });
     }
 
-    // Sort trips by date descending
     filteredTrips.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
 
     if (filteredTrips.length === 0) {
@@ -172,7 +163,6 @@ function renderTrips() {
     filteredTrips.forEach(trip => {
         const card = document.createElement('div');
         card.className = 'trip-card';
-
         const bgImage = trip.image || 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop';
 
         card.innerHTML = `
@@ -185,9 +175,9 @@ function renderTrips() {
             <div class="card-body">
                 <p class="trip-description">${trip.description || 'No description provided.'}</p>
                 <div class="card-actions">
-                    <button class="btn-action view" onclick="viewTrip('${trip.id}')">View</button>
-                    <button class="btn-action share" onclick="shareTrip('${trip.id}')">Share</button>
-                    <button class="btn-action edit" onclick="editTrip('${trip.id}')">Edit</button>
+                    <button class="btn-action view" onclick="viewTrip('${trip.id}')"><i class="far fa-eye"></i> View</button>
+                    <button class="btn-action share" onclick="openShareModal('${trip.id}', '${trip.name}')"><i class="fas fa-share-alt"></i> Share</button>
+                    <button class="btn-action edit" onclick="editTrip('${trip.id}')"><i class="far fa-edit"></i> Edit</button>
                 </div>
             </div>
         `;
@@ -195,15 +185,39 @@ function renderTrips() {
     });
 }
 
-// Global actions
+// Actions
 window.viewTrip = (id) => {
-    alert('Navigating to trip details for ID: ' + id);
-};
-
-window.shareTrip = (id) => {
-    alert(`Link copied: https://globetrotter.app/share/${id}`);
+    window.location.href = `city-view.html?id=${id}`;
 };
 
 window.editTrip = (id) => {
     window.location.href = `create-trip.html?mode=edit&id=${id}`;
+};
+
+// Share Modal Logic
+let currentShareTripId = null;
+
+window.openShareModal = (id, name) => {
+    currentShareTripId = id;
+    document.getElementById('share-trip-name').textContent = name;
+    document.getElementById('share-modal').classList.add('open');
+    document.getElementById('share-feedback').textContent = '';
+};
+
+window.closeModal = () => {
+    document.getElementById('share-modal').classList.remove('open');
+};
+
+window.shareAction = (platform) => {
+    let feedback = document.getElementById('share-feedback');
+    if (platform === 'copy') {
+        const url = `https://thisai.app/trips/${currentShareTripId}`;
+        navigator.clipboard.writeText(url).then(() => {
+            feedback.textContent = 'Link copied to clipboard!';
+            setTimeout(closeModal, 1500);
+        });
+    } else {
+        feedback.textContent = `Shared to ${platform} (Simulated)`;
+        setTimeout(closeModal, 1500);
+    }
 };

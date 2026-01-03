@@ -4,95 +4,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | GlobeTrotter</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <title>ThisAI - Smart Travel Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- Top Navigation -->
-    <nav class="navbar">
-        <a href="dashboard.html" class="nav-brand">
-            <span>🌍</span> GlobeTrotter
-        </a>
-        <div class="nav-user">
-            <div class="user-info">
-                Welcome, <span id="user-name-display">Traveler</span>
-            </div>
-            <button id="logout-btn" class="btn-logout">Logout</button>
+    <header>
+        <div class="brand-container">
+            <img src="logo.png" alt="THISAI Logo" class="logo-img">
+            <div class="logo-text">THIS<span class="logo-highlight">AI</span></div>
         </div>
-    </nav>
+        <nav class="nav-links">
+            <button id="create-trip-btn" class="btn-primary" onclick="window.location.href='create-trip.html'"><i
+                    class="fas fa-plus"></i> New Trip</button>
+            <button id="logout-btn" class="btn-action edit" style="border:none;">Logout</button>
+        </nav>
+    </header>
 
-    <!-- Main Content -->
-    <main class="container">
+    <main class="main-container">
 
-        <!-- Welcome Header -->
-        <header class="dashboard-header">
-            <h1>Overview</h1>
-            <p>Plan, organize, and visualize your journeys in one place</p>
-        </header>
-
-        <!-- Yearly Overview Section (Now Global) -->
-        <section class="stats-overview">
-            <div class="stats-controls" style="margin-bottom: 0.5rem;">
-                <h2 class="stats-title" style="font-size: 1.5rem;">Total Travel Overview</h2>
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-value" id="stat-upcoming">0</span>
+                <span class="stat-label">Upcoming</span>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-value" id="stat-upcoming">0</span>
-                    <span class="stat-label">Upcoming Trips</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-value" id="stat-completed">0</span>
-                    <span class="stat-label">Trips Completed</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-value" id="stat-days">0</span>
-                    <span class="stat-label">Total Travel Days</span>
-                </div>
-                <!-- Optional: Budget -->
-                <div class="stat-card">
-                    <span class="stat-value" id="stat-budget">$0</span>
-                    <span class="stat-label">Total Est. Budget</span>
-                </div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-completed">0</span>
+                <span class="stat-label">Completed</span>
             </div>
-        </section>
-
-        <!-- Primary Action -->
-        <div class="action-bar">
-            <a href="create-trip.html" class="btn-create-trip">
-                <span>+</span> Create New Trip
-            </a>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-days">0</span>
+                <span class="stat-label">Total Days</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-budget">$0</span>
+                <span class="stat-label">Planned Budget</span>
+            </div>
         </div>
 
-        <!-- Trips Grid -->
-        <section class="trips-section">
-            <div class="section-header">
-                <h2 class="section-title">My Trips</h2>
-                <select id="year-selector" class="year-selector">
+        <div class="section-header">
+            <h1>My Trips</h1>
+            <div class="filters">
+                <select id="year-selector" style="padding: 0.5rem; border-radius: 8px; border: 1px solid #cbd5e0;">
                     <option value="all">All Years</option>
-                    <option value="2027">2027</option>
-                    <option value="2026">2026</option>
+                    <option value="2024">2024</option>
                     <option value="2025">2025</option>
-                    <option value="2024" selected>2024</option>
-                    <option value="2023">2023</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
                 </select>
             </div>
+        </div>
 
-            <div id="trips-grid" class="trips-grid">
-                <!-- Trips injected via JS -->
-            </div>
+        <div id="trips-grid" class="dashboard-grid">
+            <!-- Trip Cards will be injected here -->
+        </div>
 
-            <!-- Empty State -->
-            <div id="empty-state" class="empty-state" style="display: none;">
-                <div class="empty-icon">🗺️</div>
-                <h3>No trips found</h3>
-                <p style="color: #6b7280; margin-top: 0.5rem">Start by creating your first journey above.</p>
-            </div>
-        </section>
+        <div id="empty-state" class="empty-state" style="text-align:center; display:none; padding:3rem;">
+            <i class="fas fa-plane-slash" style="font-size: 3rem; color: #cbd5e0; margin-bottom: 1rem;"></i>
+            <h3>No trips found.</h3>
+            <p>Ready to plan your next adventure?</p>
+        </div>
 
     </main>
+
+    <!-- Share Modal -->
+    <div id="share-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 style="margin-bottom:0.5rem;">Share Adventure</h3>
+            <p id="share-trip-name" style="color:var(--text-muted); margin-bottom:1.5rem;">Trip Name</p>
+
+            <div class="share-options">
+                <button class="share-btn whatsapp" onclick="shareAction('whatsapp')"><i
+                        class="fab fa-whatsapp"></i></button>
+                <button class="share-btn facebook" onclick="shareAction('facebook')"><i
+                        class="fab fa-facebook-f"></i></button>
+                <button class="share-btn copy" onclick="shareAction('copy')"><i class="fas fa-link"></i></button>
+            </div>
+
+            <p id="share-feedback" style="font-size:0.8rem; color: #48bb78; min-height: 1.2em;"></p>
+        </div>
+    </div>
 
     <script src="dashboard.js"></script>
 </body>

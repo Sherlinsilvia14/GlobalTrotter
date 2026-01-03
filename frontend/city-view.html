@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City View | THISAI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="city-view.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand-container">
+            <img src="logo.png" alt="THISAI Logo" class="logo-img">
+            <div class="logo-text">THIS<span class="logo-highlight">AI</span></div>
+        </div>
+        <nav class="nav-links">
+            <a href="dashboard.html" class="btn-action edit" style="border:none; text-decoration:none;">Back to
+                Dashboard</a>
+        </nav>
+    </header>
+
+    <div id="loading" style="text-align:center; padding: 5rem;">Loading City Details...</div>
+
+    <div id="city-content" style="display:none;">
+
+        <!-- Hero Section -->
+        <div class="hero-banner" id="city-banner">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title" id="city-name">City Name</h1>
+                <p class="hero-subtitle">Top attractions to explore</p>
+                <div class="hero-dates">
+                    <i class="far fa-calendar-alt"></i> <span id="city-dates">Dates</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content (Split Layout) -->
+        <main class="main-container city-layout">
+
+            <!-- Left: Grid -->
+            <div class="spots-section">
+                <div class="section-header">
+                    <div class="header-text">
+                        <h2>Top Attractions</h2>
+                        <div class="filters">
+                            <button class="filter-btn active" onclick="filterSpots('all')">All</button>
+                            <button class="filter-btn" onclick="filterSpots('pending')">Pending</button>
+                            <button class="filter-btn" onclick="filterSpots('done')">Completed</button>
+                        </div>
+                    </div>
+                    <button class="btn-add-spot" onclick="openAddSpotModal()">
+                        <i class="fas fa-plus"></i> Manual Add
+                    </button>
+                </div>
+                <div class="spots-grid" id="spots-grid">
+                    <!-- Spots injected via JS -->
+                </div>
+            </div>
+
+            <!-- Right: Map -->
+            <div class="map-section">
+                <div id="map"></div>
+                <p class="map-help-text"><i class="fas fa-info-circle"></i> Click on the map to add a new spot!</p>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Add Spot Modal -->
+    <div id="add-spot-modal" class="modal">
+        <div class="modal-content spot-modal-content">
+            <span class="close-modal" onclick="closeAddSpotModal()">&times;</span>
+            <h3>Add New Spot</h3>
+            <p style="color:var(--text-muted); margin-bottom:1.5rem;">Found a gem? Add it to your itinerary.</p>
+
+            <form id="add-spot-form">
+                <input type="hidden" id="spot-lat">
+                <input type="hidden" id="spot-lng">
+
+                <div class="form-group">
+                    <label for="spot-name">Place Name</label>
+                    <input type="text" id="spot-name" required placeholder="e.g. Hidden Beach">
+                </div>
+
+                <div class="form-group">
+                    <label for="spot-image">Image URL (Optional)</label>
+                    <input type="url" id="spot-image" placeholder="https://example.com/photo.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="spot-desc">Description</label>
+                    <textarea id="spot-desc" rows="3" placeholder="Why is this place special?"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width:100%;">Save Place</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="city-view.js"></script>
+</body>
+
+</html>
