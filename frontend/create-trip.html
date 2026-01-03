@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Trip | Thisai</title>
+    <link rel="stylesheet" href="create-trip.css">
+    <!-- Inline style for specific form tweak overrides if needed, generic styles in css file -->
+</head>
+
+<body>
+
+    <!-- Simple Nav -->
+    <nav class="navbar" style="position: static;">
+        <a href="dashboard.html" class="nav-brand">
+            <span>🌍</span> Thisai
+        </a>
+        <div class="user-info" style="font-size: 0.9rem; color: #666;">
+            Draft Mode
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <div class="form-container">
+            <div class="form-header">
+                <h1 id="page-title">Plan a New Journey</h1>
+                <p>Fill in the details below to start your next adventure.</p>
+            </div>
+
+            <form id="trip-form" class="trip-form">
+
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="trip-name">Trip Name *</label>
+                    <input type="text" id="trip-name" placeholder="e.g. Summer in Santorini" required>
+                </div>
+
+                <!-- Dates -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="trip-start">Start Date *</label>
+                        <input type="date" id="trip-start" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trip-end">End Date *</label>
+                        <input type="date" id="trip-end" required>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="trip-desc">Description</label>
+                    <textarea id="trip-desc"
+                        placeholder="Briefly describe your trip goals (e.g. Relaxing beach vacation, historical tour...)"></textarea>
+                    <p class="help-text">Optional. Keep it short and sweet.</p>
+                </div>
+
+                <!-- Cover Image -->
+                <div class="form-group">
+                    <label for="trip-image-url">Cover Image URL</label>
+                    <input type="url" id="trip-image-url" placeholder="https://example.com/image.jpg">
+                    <p class="help-text">Paste a direct link to an image (Unsplash, etc.)</p>
+
+                    <div class="image-preview-container">
+                        <img id="image-preview" alt="Trip Cover Preview">
+                        <span class="placeholder-text">Image Preview</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <a href="dashboard.html" class="btn-cancel">Cancel</a>
+                    <button type="submit" id="submit-btn" class="btn-primary">Create Trip</button>
+                </div>
+
+            </form>
+        </div>
+
+    </main>
+
+    <script src="create-trip.js"></script>
+</body>
+
+</html>
