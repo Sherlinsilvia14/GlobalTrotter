@@ -26,22 +26,58 @@
     <!-- Main Content -->
     <main class="container">
 
-        <!-- Welcome Section -->
-        <section class="welcome-section">
-            <div class="welcome-text">
-                <h1>Overview</h1>
-                <p>Plan, organize, and visualize your journeys in one place</p>
+        <!-- Welcome Header -->
+        <header class="dashboard-header">
+            <h1>Overview</h1>
+            <p>Plan, organize, and visualize your journeys in one place</p>
+        </header>
+
+        <!-- Yearly Overview Section (Now Global) -->
+        <section class="stats-overview">
+            <div class="stats-controls" style="margin-bottom: 0.5rem;">
+                <h2 class="stats-title" style="font-size: 1.5rem;">Total Travel Overview</h2>
             </div>
-            <!-- Link to new Create Trip Page -->
-            <a href="create-trip.html" class="btn-primary">
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-upcoming">0</span>
+                    <span class="stat-label">Upcoming Trips</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-completed">0</span>
+                    <span class="stat-label">Trips Completed</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-days">0</span>
+                    <span class="stat-label">Total Travel Days</span>
+                </div>
+                <!-- Optional: Budget -->
+                <div class="stat-card">
+                    <span class="stat-value" id="stat-budget">$0</span>
+                    <span class="stat-label">Total Est. Budget</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary Action -->
+        <div class="action-bar">
+            <a href="create-trip.html" class="btn-create-trip">
                 <span>+</span> Create New Trip
             </a>
-        </section>
+        </div>
 
         <!-- Trips Grid -->
         <section class="trips-section">
             <div class="section-header">
                 <h2 class="section-title">My Trips</h2>
+                <select id="year-selector" class="year-selector">
+                    <option value="all">All Years</option>
+                    <option value="2027">2027</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024" selected>2024</option>
+                    <option value="2023">2023</option>
+                </select>
             </div>
 
             <div id="trips-grid" class="trips-grid">

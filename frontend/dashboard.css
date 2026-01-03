@@ -8,6 +8,7 @@
     /* Professional Blue */
     --secondary-color: #1e40af;
     /* Darker Blue */
+    --accent-color: #3b82f6;
     --text-main: #1f2937;
     --text-muted: #6b7280;
     --white: #ffffff;
@@ -93,47 +94,129 @@ body {
     flex: 1;
 }
 
-/* --- Welcome Section --- */
-.welcome-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2.5rem;
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--card-shadow);
+/* --- Welcome Header --- */
+.dashboard-header {
+    margin-bottom: 2rem;
 }
 
-.welcome-text h1 {
+.dashboard-header h1 {
     font-size: 1.875rem;
     font-weight: 700;
     color: var(--text-main);
     margin-bottom: 0.5rem;
 }
 
-.welcome-text p {
+.dashboard-header p {
     color: var(--text-muted);
     font-size: 1.125rem;
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.2s;
-    display: inline-flex;
+/* --- Stats Overview Section --- */
+.stats-overview {
+    margin-bottom: 2.5rem;
+}
+
+.stats-controls {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
-    border: none;
+    margin-bottom: 1rem;
+}
+
+.stats-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.year-selector {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: var(--white);
+    color: var(--text-main);
+    font-family: inherit;
+    font-weight: 500;
     cursor: pointer;
 }
 
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center content */
+    text-align: center;
+    border: 1px solid #f3f4f6;
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* --- Primary Action Area --- */
+.action-bar {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: flex-start;
+    /* Or center if preferred */
+}
+
+/* --- Button Styles --- */
+.btn-create-trip,
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: var(--white);
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    /* Pill shape for modern feel */
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-create-trip:hover,
 .btn-primary:hover {
-    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.btn-create-trip:active,
+.btn-primary:active {
+    transform: translateY(0);
 }
 
 /* --- Trips Section --- */
@@ -168,7 +251,6 @@ body {
     display: flex;
     flex-direction: column;
     height: 380px;
-    /* Fixed height for consistency */
 }
 
 .trip-card:hover {
@@ -178,14 +260,13 @@ body {
 
 .card-image-container {
     height: 65%;
-    /* Dominant image area */
     width: 100%;
     background-size: cover;
     background-position: center;
     position: relative;
 }
 
-/* Gradient Overlay on Image */
+/* Gradient Overlay */
 .card-overlay {
     position: absolute;
     bottom: 0;
@@ -232,6 +313,7 @@ body {
     margin-bottom: 1rem;
 }
 
+/* Card Action Buttons */
 .card-actions {
     display: flex;
     gap: 0.75rem;
@@ -241,31 +323,54 @@ body {
 .btn-action {
     flex: 1;
     padding: 0.6rem;
-    border: 1px solid #e5e7eb;
-    background-color: var(--white);
-    color: var(--text-main);
-    border-radius: 6px;
+    border: none;
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    border-radius: 8px;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .btn-action:hover {
-    background-color: #f3f4f6;
-    border-color: #d1d5db;
+    background-color: #e2e8f0;
+    color: var(--text-main);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
 }
 
-.btn-action.edit {
-    color: var(--primary-color);
-    border-color: #bfdbfe;
+/* Specific styles for actions */
+.btn-action.view {
+    color: #2563eb;
     background-color: #eff6ff;
 }
 
-.btn-action.edit:hover {
+.btn-action.view:hover {
     background-color: #dbeafe;
-    border-color: #93c5fd;
+}
+
+.btn-action.share {
+    color: #059669;
+    background-color: #ecfdf5;
+}
+
+.btn-action.share:hover {
+    background-color: #d1fae5;
+}
+
+.btn-action.edit {
+    color: #7c3aed;
+    background-color: #f5f3ff;
+}
+
+.btn-action.edit:hover {
+    background-color: #ede9fe;
 }
 
 /* Empty State */
@@ -285,10 +390,8 @@ body {
 
 /* Utilities */
 @media (max-width: 640px) {
-    .welcome-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
     .nav-user {
@@ -297,6 +400,5 @@ body {
 
     .user-info span {
         display: none;
-        /* Hide name on mobile */
     }
 }
