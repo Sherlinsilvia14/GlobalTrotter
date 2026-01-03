@@ -4,29 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlobeTrotter - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard | GlobeTrotter</title>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
-    <div class="container">
-        <h2>Dashboard</h2>
-        <p>Welcome to GlobeTrotter! <br> You are logged in.</p>
-        <button class="btn" onclick="logout()">Logout</button>
-    </div>
 
-    <script>
-        // Check auth
-        if (!localStorage.getItem('token')) {
-            window.location.href = 'login.html';
-        }
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="nav-brand">
+            <span>🌍</span> GlobeTrotter
+        </a>
+        <div class="nav-user">
+            <div class="user-info">
+                Welcome, <span id="user-name-display">Traveler</span>
+            </div>
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
 
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = 'login.html';
-        }
-    </script>
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-text">
+                <h1>Overview</h1>
+                <p>Plan, organize, and visualize your journeys in one place</p>
+            </div>
+            <!-- Link to new Create Trip Page -->
+            <a href="create-trip.html" class="btn-primary">
+                <span>+</span> Create New Trip
+            </a>
+        </section>
+
+        <!-- Trips Grid -->
+        <section class="trips-section">
+            <div class="section-header">
+                <h2 class="section-title">My Trips</h2>
+            </div>
+
+            <div id="trips-grid" class="trips-grid">
+                <!-- Trips injected via JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <div class="empty-icon">🗺️</div>
+                <h3>No trips found</h3>
+                <p style="color: #6b7280; margin-top: 0.5rem">Start by creating your first journey above.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="dashboard.js"></script>
 </body>
 
 </html>
